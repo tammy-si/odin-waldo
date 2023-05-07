@@ -5,6 +5,17 @@ import React, {useState} from "react";
 
 function App() {
   const [dropdown, showDropdown] = useState(false);
+  const [charactersLeft, setCharactersLeft] = useState([
+    {
+      name: "Johnny Bravo",
+    },
+    {
+      name: "Totoro"
+    },
+    {
+      name: "R2D2"
+    }
+  ])
 
   const handleImageClick = (e) => {
     console.log('here')
@@ -23,7 +34,10 @@ function App() {
     var px=x/cw*iw
     var py=y/ch*ih
     // display dropdown for character
-    if (dropdown ? showDropdown(false) : showDropdown(true))
+    showDropdown(true)
+    // set the dropdown location
+    document.getElementById("dropdown").style.top = y + "px";
+    document.getElementById("dropdown").style.left = x + "px";
     // clicked on johnny
     if (px >= 700 && px <= 800 && py >= 950 && py <= 1050) {
       console.log("Johnny");
@@ -37,7 +51,7 @@ function App() {
         <h1>Find the characters</h1>
       </header>
       <img src={require('./egor-klyuchnyk-small.jpg')} alt='Waldo image' onClick={handleImageClick}></img>
-      { dropdown ? <Dropdown /> : null}
+      { dropdown ? <Dropdown charactersLeft = {charactersLeft}/> : null}
     </div>
   );
 }
