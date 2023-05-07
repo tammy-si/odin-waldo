@@ -3,7 +3,7 @@ function Dropdown (props) {
     return (
         <div className="dropdown" id="dropdown">
             {props.charactersLeft.map(character => {
-                return <li>{character.name}</li>
+                return <button onClick={() => props.handleButtonClick(character.name)}>{character.name}</button>
             })}
         </div>
     )

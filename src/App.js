@@ -4,7 +4,6 @@ import Dropdown from "./components/dropdown";
 import React, {useState} from "react";
 
 function App() {
-  const [dropdown, showDropdown] = useState(false);
   const [charactersLeft, setCharactersLeft] = useState([
     {
       name: "Johnny Bravo",
@@ -34,7 +33,7 @@ function App() {
     var px=x/cw*iw
     var py=y/ch*ih
     // display dropdown for character
-    showDropdown(true)
+    document.getElementById("dropdown").style.display = 'flex';
     // set the dropdown location
     document.getElementById("dropdown").style.top = y + "px";
     document.getElementById("dropdown").style.left = x + "px";
@@ -45,13 +44,19 @@ function App() {
       console.log("Not Johnny")
     }
   }
+
+  const handleButtonClick = (character) => {
+    // get the character that was passed in
+    console.log(character)
+  } 
+
   return (
     <div className="App">
       <header>
         <h1>Find the characters</h1>
       </header>
       <img src={require('./egor-klyuchnyk-small.jpg')} alt='Waldo image' onClick={handleImageClick}></img>
-      { dropdown ? <Dropdown charactersLeft = {charactersLeft}/> : null}
+      <Dropdown charactersLeft = {charactersLeft} handleButtonClick={handleButtonClick}/>
     </div>
   );
 }

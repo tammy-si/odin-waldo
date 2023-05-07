@@ -16,7 +16,13 @@ img {
 }
 
 .dropdown {
+    display: none;
     height: auto;
     width: 10rem;
     position: absolute;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 12pt;
 }
