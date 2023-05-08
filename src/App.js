@@ -8,7 +8,6 @@ import Message from "./components/message";
 import { useNavigate } from 'react-router-dom';
 
 function App() {
-  const navigate = useNavigate();
   const [charactersLeft, setCharactersLeft] = useState([
     {
       name: "Johnny Bravo",
@@ -36,12 +35,12 @@ function App() {
    }
   }, [time]);
 
-
+  const navigate = useNavigate();
   useEffect(()=> {
     // no characters left
     if (charactersLeft.length == 0) {
-      // route to scores section so user could enter score
-      navigate('/scores')
+      // go to scores section so user could enter score
+      navigate('/scores', { state: {time: time} })
     }
   }, [charactersLeft])
 
