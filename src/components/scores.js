@@ -1,5 +1,8 @@
 import { useLocation } from "react-router-dom";
-import {useState} from 'react'
+import {useState} from 'react';
+import { doc, setDoc, collection, addDoc } from "firebase/firestore"; 
+import { db } from "../firebase";
+
 
 function Scores() {
     const [name, setName] = useState("")
@@ -17,9 +20,12 @@ function Scores() {
         setName(e.target.value);
     }
 
-    const handleSubmit = (e) => {
+    async function handleSubmit (e) {        
         e.preventDefault();
-        console.log(name)
+        await addDoc(collection(db, "scores"), {
+            name: name,
+            timeInSeconds: time
+        });
     }
 
     return (
