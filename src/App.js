@@ -2,6 +2,8 @@ import "./app.css"
 import "./egor-klyuchnyk-small.jpg"
 import Dropdown from "./components/dropdown";
 import React, {useState} from "react";
+import { query, collection, where, getDocs } from "firebase/firestore"; 
+import { db } from "./firebase";
 
 function App() {
   const [charactersLeft, setCharactersLeft] = useState([
@@ -15,6 +17,8 @@ function App() {
       name: "R2D2"
     }
   ])
+  const [curr_x, setCurrX] = useState(0);
+  const [curr_y, setCurrY] = useState(0);
 
   const handleImageClick = (e) => {
     console.log('here')
@@ -34,20 +38,32 @@ function App() {
     var py=y/ch*ih
     // display dropdown for character
     document.getElementById("dropdown").style.display = 'flex';
-    // set the dropdown location
+    // set the dropdown location to where the mouse actually clicked
     document.getElementById("dropdown").style.top = y + "px";
     document.getElementById("dropdown").style.left = x + "px";
-    // clicked on johnny
-    if (px >= 700 && px <= 800 && py >= 950 && py <= 1050) {
-      console.log("Johnny");
-    } else {
-      console.log("Not Johnny")
-    }
+    // set the curr X and curr Y to keep track of where the user clicked
+    setCurrX(px);
+    setCurrY(py);
   }
 
-  const handleButtonClick = (character) => {
+  async function handleButtonClick (character) {
+    let characterData;
     // get the character that was passed in
-    console.log(character)
+    const q = query(collection(db, "Characters"), where("name", "==", character));
+
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      characterData = doc.data();
+    });
+    console.log(characterData);
+    // check if user clicked location is in the range
+    if (curr_x >= characterData.x_target && curr_x <= characterData.x_target_end && curr_y >= characterData.y_target && curr_y <= characterData.y_target_end) {
+      // in the range, can update character's left state
+      let newCharactersLeft = charactersLeft.filter(char => char.name !== character)
+      setCharactersLeft(newCharactersLeft)
+    } else {
+    }
   } 
 
   return (
