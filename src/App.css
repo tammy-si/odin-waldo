@@ -9,7 +9,8 @@
 header {
     position: fixed;
     background-color: rgba(0, 0, 0);
-    color: red;
+    color: lightcoral;
+    padding: 5px;
     width: 100%;
 }
 
@@ -42,4 +43,41 @@ img {
 
 .wrong {
     background-color: lightcoral;
+}
+
+/* for the home page */
+.home {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.characters {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.character-info {
+    list-style: none;
+    height: 230px;
+    width: 300px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.character-info img{
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.start-button {
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    margin: auto 30px;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
 }
