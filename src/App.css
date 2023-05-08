@@ -8,6 +8,9 @@
 
 header {
     position: fixed;
+    background-color: rgba(0, 0, 0);
+    color: red;
+    width: 100%;
 }
 
 img {
@@ -25,4 +28,18 @@ img {
     flex-direction: column;
     padding: 10px;
     border-radius: 12pt;
+}
+
+.message {
+    text-align: center;
+    color: black;
+    margin: 0 auto;
+}
+
+.right {
+    background-color: green;
+}
+
+.wrong {
+    background-color: lightcoral;
 }

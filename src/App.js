@@ -1,9 +1,10 @@
 import "./app.css"
 import "./egor-klyuchnyk-small.jpg"
 import Dropdown from "./components/dropdown";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { query, collection, where, getDocs } from "firebase/firestore"; 
 import { db } from "./firebase";
+import Message from "./components/message";
 
 function App() {
   const [charactersLeft, setCharactersLeft] = useState([
@@ -19,9 +20,26 @@ function App() {
   ])
   const [curr_x, setCurrX] = useState(0);
   const [curr_y, setCurrY] = useState(0);
+  const [correct, setCorrect] = useState(false);
+  const [displayMessage, setDisplayMessage] = useState(false);
+
+  useEffect(()=> {
+    // no characters left
+    if (charactersLeft.length == 0) {
+      console.log("Game done")
+    }
+  }, [charactersLeft])
+
+  useEffect(() => {
+    // get rid of the display Message after 2 seconds
+    if (displayMessage) {
+      setTimeout(() => {
+        setDisplayMessage(false);
+      }, 2000)
+    }
+  }, [displayMessage])
 
   const handleImageClick = (e) => {
-    console.log('here')
     // from this stackoverflow answer https://stackoverflow.com/questions/34867066/javascript-mouse-click-coordinates-for-image
     const image = e.target;
     let rect = image.getBoundingClientRect();
@@ -56,20 +74,23 @@ function App() {
       // doc.data() is never undefined for query doc snapshots
       characterData = doc.data();
     });
-    console.log(characterData);
     // check if user clicked location is in the range
     if (curr_x >= characterData.x_target && curr_x <= characterData.x_target_end && curr_y >= characterData.y_target && curr_y <= characterData.y_target_end) {
       // in the range, can update character's left state
       let newCharactersLeft = charactersLeft.filter(char => char.name !== character)
       setCharactersLeft(newCharactersLeft)
+      setCorrect(true);
     } else {
+      setCorrect(false);
     }
+    setDisplayMessage(true);
   } 
 
   return (
     <div className="App">
       <header>
         <h1>Find the characters</h1>
+        { displayMessage ? <Message correct={correct}/> : null }
       </header>
       <img src={require('./egor-klyuchnyk-small.jpg')} alt='Waldo image' onClick={handleImageClick}></img>
       <Dropdown charactersLeft = {charactersLeft} handleButtonClick={handleButtonClick}/>
