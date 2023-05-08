@@ -25,7 +25,7 @@ function Home() {
                     return (
                         <div className="character-info">
                             <li>{character.name}</li>
-                            <img src={character.img_url}></img>
+                            <img src={character.img_url} alt={character.name}></img>
                         </div>
                     )
                 })}

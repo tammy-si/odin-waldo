@@ -5,8 +5,10 @@ import React, {useEffect, useState} from "react";
 import { query, collection, where, getDocs } from "firebase/firestore"; 
 import { db } from "./firebase";
 import Message from "./components/message";
+import { useNavigate } from 'react-router-dom';
 
 function App() {
+  const navigate = useNavigate();
   const [charactersLeft, setCharactersLeft] = useState([
     {
       name: "Johnny Bravo",
@@ -22,11 +24,24 @@ function App() {
   const [curr_y, setCurrY] = useState(0);
   const [correct, setCorrect] = useState(false);
   const [displayMessage, setDisplayMessage] = useState(false);
+  // this handles the users score/time
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(()=> {     
+      setTime(time + 1);
+    }, 1000);
+    return () => { // this runs as the clean up function for the useEffect
+      clearInterval(timer)
+   }
+  }, [time]);
+
 
   useEffect(()=> {
     // no characters left
     if (charactersLeft.length == 0) {
-      console.log("Game done")
+      // route to scores section so user could enter score
+      navigate('/scores')
     }
   }, [charactersLeft])
 
@@ -38,6 +53,7 @@ function App() {
       }, 2000)
     }
   }, [displayMessage])
+
 
   const handleImageClick = (e) => {
     // from this stackoverflow answer https://stackoverflow.com/questions/34867066/javascript-mouse-click-coordinates-for-image
@@ -86,10 +102,16 @@ function App() {
     setDisplayMessage(true);
   } 
 
+  function str_pad_left(string, pad, length) {
+    return (new Array(length + 1).join(pad) + string).slice(-length);
+  }
+  const minutes = Math.floor(time / 60);
+  const seconds = time - minutes * 60;
   return (
     <div className="App">
       <header>
         <h1>Find the characters</h1>
+        { str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds , '0', 2) }
         { displayMessage ? <Message correct={correct}/> : null }
       </header>
       <img src={require('./egor-klyuchnyk-small.jpg')} alt='Waldo image' onClick={handleImageClick}></img>
