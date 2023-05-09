@@ -33,7 +33,7 @@ function InputScore() {
             <button onClick={() => navigate('/')}>Play again</button>
             {data.map(score => {
                 return (
-                    <div className='score-info'>
+                    <div className='score-info' key={score.name}>
                         <p>{score.name}</p>
                         <p>{str_pad_left(Math.floor(score.timeInSeconds / 60), '0', 2) + ':' + str_pad_left(score.timeInSeconds - Math.floor(score.timeInSeconds / 60) * 60 , '0', 2) }</p>
                     </div>

@@ -18,12 +18,12 @@ function Home() {
     ]
     
     return (
-        <div class="home">
+        <div className="home">
             <h1>Find these characters!</h1>
-            <div class="characters">
+            <div className="characters">
                 {characters.map(character => {
                     return (
-                        <div className="character-info">
+                        <div className="character-info" key={character.name}>
                             <li>{character.name}</li>
                             <img src={character.img_url} alt={character.name}></img>
                         </div>
