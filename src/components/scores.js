@@ -1,12 +1,14 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import {useState} from 'react';
 import { doc, setDoc, collection, addDoc } from "firebase/firestore"; 
 import { db } from "../firebase";
+import Leaderboard from "./leaderboard";
 
 
 function Scores() {
     const [name, setName] = useState("")
     const { state } = useLocation();
+    const navigate = useNavigate();
     const time = state.time;
 
     // for formatting the time
@@ -26,10 +28,11 @@ function Scores() {
             name: name,
             timeInSeconds: time
         });
+        navigate('/leaderboard')
     }
 
     return (
-        <div className="scores">
+        <div className="input-score">
             <form className="enter-score" onSubmit={handleSubmit}>
                 <input type="text" placeholder="Name" value={name} onChange={handleNameChange}></input>
                 <p className="last-score">{ str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds , '0', 2) }</p>
