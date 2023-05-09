@@ -23,6 +23,10 @@ function InputScore() {
             .catch(console.error);
     }, [])
 
+    function str_pad_left(string, pad, length) {
+        return (new Array(length + 1).join(pad) + string).slice(-length);
+    }
+
     return (
         <div className="leaderboard">
             <h1>Leaderboard</h1>
@@ -31,7 +35,7 @@ function InputScore() {
                 return (
                     <div className='score-info'>
                         <p>{score.name}</p>
-                        <p>{score.timeInSeconds}</p>
+                        <p>{str_pad_left(Math.floor(score.timeInSeconds / 60), '0', 2) + ':' + str_pad_left(score.timeInSeconds - Math.floor(score.timeInSeconds / 60) * 60 , '0', 2) }</p>
                     </div>
                 );
             })}
