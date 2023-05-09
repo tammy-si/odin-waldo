@@ -34,8 +34,9 @@ function Scores() {
     return (
         <div className="input-score">
             <form className="enter-score" onSubmit={handleSubmit}>
+                <label>Please enter a name to put your score on the leaderboard. </label>
                 <input type="text" placeholder="Name" value={name} onChange={handleNameChange}></input>
-                <p className="last-score">{ str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds , '0', 2) }</p>
+                <p className="last-score">Score: { str_pad_left(minutes, '0', 2) + ':' + str_pad_left(seconds , '0', 2) }</p>
                 <input type='submit'></input>
             </form>
         </div>
