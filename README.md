@@ -1,3 +1,6 @@
+# About
+This is a Where's Waldo type of game for the Odin Project. It was made with HTML, CSS, Javascript, React, and Firebase. 
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
